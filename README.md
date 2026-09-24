@@ -101,4 +101,4 @@ electron/
 
 ## License
 
-Not yet decided — add one before making the repo public if that matters to you.
+MIT — see [LICENSE](LICENSE).
