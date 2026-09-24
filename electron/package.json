@@ -1,0 +1,38 @@
+{
+  "name": "a6-ammo-stats",
+  "version": "1.0.0",
+  "description": "A6 Ammo Stats - load your Ammo.pbo/WeaponScripts.pbo, edit ammo/damage values, pack it back",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^32.0.0",
+    "electron-builder": "^25.0.0"
+  },
+  "build": {
+    "appId": "net.dayzhub.a6ammostats",
+    "productName": "A6 Ammo Stats",
+    "directories": { "output": "dist" },
+    "files": [
+      "main.js",
+      "preload.js",
+      "pbo/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      { "from": "../app", "to": "app-content", "filter": ["**/*"] },
+      { "from": "vendor", "to": "vendor", "filter": ["**/*"] }
+    ],
+    "win": { "target": "nsis" },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
+  "allowScripts": {
+    "electron@32.3.3": true
+  }
+}

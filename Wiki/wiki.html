@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>A6 Ammo Stats — User Guide</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm 20mm 16mm; }
+  :root {
+    --bg: #0b0d10;
+    --panel: #14171c;
+    --border: #262b33;
+    --text: #1c2026;
+    --muted: #5b6472;
+    --accent: #2a5a80;
+    --accent-bright: #4fb0ff;
+    --amber: #b8860b;
+    --green: #1f8a4c;
+    --red: #b93a35;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: var(--text);
+    margin: 0;
+    font-size: 10.5pt;
+    line-height: 1.55;
+  }
+  h1, h2, h3 { font-family: 'Segoe UI', Arial, sans-serif; color: #0d1117; }
+  .section { page-break-after: always; padding-top: 4px; }
+  .section:last-child { page-break-after: auto; }
+
+  /* ---- cover ---- */
+  .cover {
+    height: 250mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(160deg, #0b0d10 0%, #14171c 60%, #1a2f3f 100%);
+    color: #e8ebef;
+    margin: -18mm -16mm 0 -16mm;
+    padding: 0 16mm;
+  }
+  .cover .eyebrow { color: var(--accent-bright); letter-spacing: 3px; font-size: 11pt; font-weight: 700; text-transform: uppercase; margin-bottom: 18px; }
+  .cover h1 { color: #fff; font-size: 40pt; margin: 0; letter-spacing: 1px; }
+  .cover .sub { color: #9aa4b2; font-size: 13pt; margin-top: 14px; max-width: 420px; }
+  .cover .ver { margin-top: 60px; color: #5b6472; font-size: 9pt; }
+
+  /* ---- toc ---- */
+  .toc-title { font-size: 22pt; margin-bottom: 24px; border-bottom: 3px solid var(--accent-bright); padding-bottom: 10px; }
+  .toc-list { list-style: none; padding: 0; margin: 0; }
+  .toc-list li { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dotted #cfd6de; font-size: 12pt; }
+  .toc-list .num { color: var(--accent-bright); font-weight: 700; width: 34px; display: inline-block; }
+
+  /* ---- body ---- */
+  h2.section-title {
+    font-size: 20pt;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    border-bottom: 3px solid var(--accent-bright);
+    padding-bottom: 8px;
+    margin-bottom: 18px;
+  }
+  h2.section-title .n { color: var(--accent-bright); font-size: 14pt; }
+  h3 { font-size: 13pt; margin-top: 22px; margin-bottom: 8px; color: var(--accent); }
+  p { margin: 8px 0; }
+  .lead { font-size: 11.5pt; color: var(--muted); }
+
+  figure { margin: 14px 0; text-align: center; }
+  figure img {
+    max-width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.15);
+  }
+  figcaption { font-size: 9pt; color: var(--muted); margin-top: 6px; font-style: italic; }
+
+  .callout {
+    background: #f2f7fb;
+    border-left: 4px solid var(--accent-bright);
+    padding: 10px 14px;
+    border-radius: 4px;
+    margin: 14px 0;
+    font-size: 10pt;
+  }
+  .callout.warn { background: #fdf6ea; border-left-color: var(--amber); }
+  .callout.tip { background: #eef9f1; border-left-color: var(--green); }
+  .callout b { display: block; margin-bottom: 3px; text-transform: uppercase; font-size: 8.5pt; letter-spacing: 0.5px; }
+
+  table.fieldtable { width: 100%; border-collapse: collapse; margin: 10px 0 18px; font-size: 9.5pt; }
+  table.fieldtable th {
+    text-align: left; background: #14171c; color: #fff; padding: 7px 10px;
+    text-transform: uppercase; font-size: 8pt; letter-spacing: 0.4px;
+  }
+  table.fieldtable td { padding: 7px 10px; border-bottom: 1px solid #e2e6ea; vertical-align: top; }
+  table.fieldtable tr:nth-child(even) td { background: #f7f9fb; }
+  table.fieldtable .fname { font-weight: 700; white-space: nowrap; color: var(--accent); }
+  table.fieldtable .fex { font-family: 'Consolas', monospace; color: var(--muted); white-space: nowrap; }
+
+  ol.steps { padding-left: 0; counter-reset: step; list-style: none; }
+  ol.steps li {
+    counter-increment: step;
+    position: relative;
+    padding: 6px 0 6px 38px;
+    margin-bottom: 6px;
+  }
+  ol.steps li::before {
+    content: counter(step);
+    position: absolute; left: 0; top: 4px;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--accent-bright); color: #fff;
+    font-weight: 700; font-size: 11pt;
+    display: flex; align-items: center; justify-content: center;
+  }
+  code { font-family: 'Consolas', monospace; background: #eef1f4; padding: 1px 5px; border-radius: 3px; font-size: 9.5pt; }
+  .kbd { display: inline-block; border: 1px solid #c2c9d1; border-bottom-width: 2px; border-radius: 4px; padding: 1px 7px; font-family: 'Consolas', monospace; font-size: 9pt; background: #fff; }
+  .badge-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--amber); margin-right: 4px; vertical-align: middle; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ COVER -->
+<section class="section cover">
+  <div class="eyebrow">DayzHUB &middot; Breathless Tools</div>
+  <h1>A6 AMMO STATS</h1>
+  <div class="sub">A desktop app to load your Ammo.pbo and WeaponScripts.pbo, edit real ammo/damage values through a simple form, and pack the result straight back into a .pbo.</div>
+  <div class="ver">User Guide &middot; Version 1.0 &middot; 2026-09-23</div>
+</section>
+
+<!-- ============================================================ TOC -->
+<section class="section">
+  <div class="toc-title">Contents</div>
+  <ul class="toc-list">
+    <li><span><span class="num">01</span>What is A6 Ammo Stats?</span></li>
+    <li><span><span class="num">02</span>Installing the app</span></li>
+    <li><span><span class="num">03</span>Loading your files</span></li>
+    <li><span><span class="num">04</span>Browsing &amp; searching calibers</span></li>
+    <li><span><span class="num">05</span>The Ballistics fields, explained</span></li>
+    <li><span><span class="num">06</span>The Damage fields, explained</span></li>
+    <li><span><span class="num">07</span>Editing a value</span></li>
+    <li><span><span class="num">08</span>Reviewing pending changes</span></li>
+    <li><span><span class="num">09</span>Packing your changes back into a .pbo</span></li>
+    <li><span><span class="num">10</span>Troubleshooting &amp; known limitations</span></li>
+    <li><span><span class="num">11</span>Quick reference</span></li>
+  </ul>
+</section>
+
+<!-- ============================================================ 01 WHAT IS IT -->
+<section class="section">
+  <h2 class="section-title"><span class="n">01</span> What is A6 Ammo Stats?</h2>
+  <p class="lead">A6 Ammo Stats is a standalone desktop tool for editing the real in-game stats of every A6 ammo caliber — damage, velocity, deflection, noise, and more — without touching a text editor or a hex editor.</p>
+  <p>You load your own <code>Ammo.pbo</code> and <code>WeaponScripts.pbo</code>, the app reads every real caliber's config out of them (currently 20 real calibers from the base A6 pack), lets you edit any stat through plain number fields, and packs your changes back into a new <code>.pbo</code> you can drop straight onto your server.</p>
+
+  <div class="callout tip">
+    <b>Nothing is guessed</b>
+    Every field in this app maps to a real, named value inside the actual game config — the same <code>cfgAmmo</code> data the DayZ engine itself reads. There is no invented or approximated stat anywhere in this tool.
+  </div>
+
+  <h3>What it does not do</h3>
+  <p>It does not sign your packed <code>.pbo</code> — you sign it yourself with your own key, the same way you always do. It also does not touch weapon-side stats (recoil, sway, fire rate) — only the ammo/damage side.</p>
+</section>
+
+<!-- ============================================================ 02 INSTALL -->
+<section class="section">
+  <h2 class="section-title"><span class="n">02</span> Installing the app</h2>
+  <ol class="steps">
+    <li>Run <code>A6 Ammo Stats Setup 1.0.0.exe</code>.</li>
+    <li>The installer will ask where to install — pick any folder, or keep the default.</li>
+    <li>Click through to finish. No other setup, no extra downloads.</li>
+    <li>Launch <b>A6 Ammo Stats</b> from your Start Menu or Desktop shortcut.</li>
+  </ol>
+
+  <div class="callout warn">
+    <b>One real limitation</b>
+    If the pbo you load stores its config in <em>binarized</em> form (<code>config.bin</code> — true for the stock A6 <code>Ammo.pbo</code>/<code>WeaponScripts.pbo</code>), converting that to readable text currently needs <b>DayZ Tools</b> installed on the same machine (free, via Steam). This only affects the <em>loading</em> step — packing your edited result back out never needs DayZ Tools. If DayZ Tools isn't found, the app tells you clearly instead of failing silently.
+  </div>
+</section>
+
+<!-- ============================================================ 03 LOADING -->
+<section class="section">
+  <h2 class="section-title"><span class="n">03</span> Loading your files</h2>
+  <p>On first launch, the app is empty — nothing to edit until you point it at your files.</p>
+
+  <figure>
+    <img src="images/01-empty.png" alt="Empty state on first launch">
+    <figcaption>The app on first launch. Two buttons, nothing loaded yet.</figcaption>
+  </figure>
+
+  <ol class="steps">
+    <li>Click <b>Load Ammo.pbo</b> and pick your <code>Ammo.pbo</code> file.</li>
+    <li>Click <b>Load WeaponScripts.pbo</b> and pick your <code>WeaponScripts.pbo</code> file.</li>
+    <li>The app unpacks both, converts any binarized configs to text, and reads every real caliber it finds — this takes a few seconds.</li>
+  </ol>
+
+  <p>You don't have to load both at once — loading just one still works, you'll just see fewer calibers (whichever file actually contains the caliber's <code>cfgAmmo</code> data).</p>
+
+  <figure>
+    <img src="images/02-loaded.png" alt="Both files loaded, caliber list populated">
+    <figcaption>Both files loaded — both buttons show a checkmark, and the left sidebar fills with every real caliber found (20, for the stock A6 pack).</figcaption>
+  </figure>
+</section>
+
+<!-- ============================================================ 04 BROWSING -->
+<section class="section">
+  <h2 class="section-title"><span class="n">04</span> Browsing &amp; searching calibers</h2>
+  <p>The left sidebar lists every caliber the app found, sorted alphabetically. Each row shows the caliber name and its real in-game classname underneath (e.g. <code>Bullet_A6_127x99</code>) — useful for confirming you're editing the exact round you think you are.</p>
+  <p>Click any row to open it in the editor. Type in the search box at the top of the sidebar to filter by caliber name or classname as you type.</p>
+
+  <figure>
+    <img src="images/06-search.png" alt="Search filtering the caliber list">
+    <figcaption>Typing "50" narrows the list to only the .50-family calibers. Search matches both the caliber name and the classname.</figcaption>
+  </figure>
+</section>
+
+<!-- ============================================================ 05 BALLISTICS -->
+<section class="section">
+  <h2 class="section-title"><span class="n">05</span> The Ballistics fields, explained</h2>
+  <p>Selecting a caliber opens its full stat sheet. The top group, <b>Ballistics</b>, controls how the round behaves in flight and what it does to hard surfaces.</p>
+
+  <figure>
+    <img src="images/03-caliber.png" alt="A caliber's full field layout">
+    <figcaption>12.7x99 selected, unmodified — every field pre-filled with the round's real current value.</figcaption>
+  </figure>
+
+  <table class="fieldtable">
+    <tr><th>Field</th><th>What it controls</th></tr>
+    <tr><td class="fname">Hit (Damage)</td><td>The base direct-hit damage this round deals on a solid hit, before any hit-zone or armor multipliers apply. This is the single biggest lever for "how deadly is this round."</td></tr>
+    <tr><td class="fname">Indirect Hit</td><td>Splash/area damage dealt to targets <em>near</em> the impact point rather than directly hit. <code>0</code> for a normal bullet — only meaningful for explosive-type rounds.</td></tr>
+    <tr><td class="fname">Indirect Range</td><td>The radius, in meters, that Indirect Hit reaches. Has no effect while Indirect Hit is <code>0</code>.</td></tr>
+    <tr><td class="fname">Init Speed (m/s)</td><td>Muzzle velocity — how fast the round leaves the barrel. Higher means flatter trajectory and less drop over distance.</td></tr>
+    <tr><td class="fname">Typical Speed</td><td>A reference velocity the engine uses for its own ballistic/sound-timing math. On real A6 rounds this normally matches Init Speed exactly.</td></tr>
+    <tr><td class="fname">Caliber</td><td>An abstracted game value (not the literal mm bore size) that governs how well this round penetrates cover and armor. A 12.7x99 round shows <code>3.5</code> here, not <code>12.7</code> — don't confuse it with the real-world caliber in the round's name.</td></tr>
+    <tr><td class="fname">Deflecting</td><td>How prone the round is to ricochet off hard/angled surfaces instead of penetrating.</td></tr>
+    <tr><td class="fname">Air Friction</td><td>Always a small negative number — controls how quickly the round loses velocity over distance. More negative means faster drop-off at range.</td></tr>
+    <tr><td class="fname">Barrel Wear</td><td>How much firing this round wears down the weapon's barrel condition per shot.</td></tr>
+    <tr><td class="fname">Round Weight</td><td>The individual cartridge's weight — feeds into the loaded magazine's total inventory weight.</td></tr>
+  </table>
+</section>
+
+<!-- ============================================================ 06 DAMAGE -->
+<section class="section">
+  <h2 class="section-title"><span class="n">06</span> The Damage fields, explained</h2>
+  <p>The second group, <b>Damage</b>, controls exactly what happens to a player's health when this round hits them.</p>
+
+  <table class="fieldtable">
+    <tr><th>Field</th><th>What it controls</th></tr>
+    <tr><td class="fname">Health Damage</td><td>Direct damage applied to the player's overall health pool on a hit.</td></tr>
+    <tr><td class="fname">Armor Damage</td><td>Damage applied specifically to worn armor/plate durability when the hit lands on an armored zone.</td></tr>
+    <tr><td class="fname">Blood Damage</td><td>Damage applied to the player's blood level — drives bleeding severity.</td></tr>
+    <tr><td class="fname">Shock Damage</td><td>Damage applied to the shock system, tied to pain/incapacitation response.</td></tr>
+    <tr><td class="fname">Noise Strength</td><td>How loud this shot registers to nearby AI and players for detection purposes.</td></tr>
+  </table>
+
+  <p>Below the Damage group, a read-only <b>Magazine</b> panel shows the real loaded-magazine item this round belongs to (its display name, classname, weight, and round count) — for reference only, not editable here.</p>
+</section>
+
+<!-- ============================================================ 07 EDITING -->
+<section class="section">
+  <h2 class="section-title"><span class="n">07</span> Editing a value</h2>
+  <p>Click into any field and type a new number. That's it — no save button per field, no confirmation dialog.</p>
+
+  <ol class="steps">
+    <li>Click the field you want to change.</li>
+    <li>Type the new value.</li>
+    <li>The field's border turns amber, and a <b>MODIFIED</b> badge appears next to the caliber name.</li>
+  </ol>
+
+  <figure>
+    <img src="images/04-edited.png" alt="A modified field, amber-highlighted">
+    <figcaption>Hit (Damage) changed from 17 to 22 on 12.7x99 — the field is amber-highlighted, the MODIFIED badge is showing, and the change is already listed on the right.</figcaption>
+  </figure>
+
+  <div class="callout">
+    <b>Changes are per-caliber, not global</b>
+    Editing one caliber never affects any other — every caliber's edits are tracked completely independently, so you can safely tune several rounds in one sitting before packing.
+  </div>
+</section>
+
+<!-- ============================================================ 08 PENDING -->
+<section class="section">
+  <h2 class="section-title"><span class="n">08</span> Reviewing pending changes</h2>
+  <p>The right-hand <b>Pending Changes</b> panel is your running summary of everything you've edited since loading — across every caliber, not just the one currently open. Each entry shows the exact field, its original value, and your new value.</p>
+
+  <figure>
+    <img src="images/05-pending.png" alt="Multiple pending changes across three calibers">
+    <figcaption>Three calibers edited in one session — 12.7x99, 50AE, and 556x45 — each with its own change listed. Notice the small <span class="badge-dot"></span> dot next to a caliber's name in the sidebar: that's how you can tell at a glance which calibers you've touched.</figcaption>
+  </figure>
+
+  <p>Typing a value back to its original number automatically removes it from this list — there's no separate "undo" needed, just retype the original.</p>
+</section>
+
+<!-- ============================================================ 09 PACKING -->
+<section class="section">
+  <h2 class="section-title"><span class="n">09</span> Packing your changes back into a .pbo</h2>
+  <p>Once you're happy with your edits, use the two buttons at the bottom of the Pending Changes panel:</p>
+
+  <ol class="steps">
+    <li><b>Pack Ammo.pbo</b> — writes every pending change back into the Ammo.pbo you loaded, and packs a new <code>.pbo</code>.</li>
+    <li><b>Pack WeaponScripts.pbo</b> — same, for WeaponScripts.pbo. Since the real A6 ammo data lives in WeaponScripts.pbo, this is normally the one you want.</li>
+    <li>A save dialog opens — pick where to save the new file and what to name it.</li>
+    <li>The app writes your edits into the real config text (only the exact fields you changed — everything else in the file stays byte-for-byte identical) and packs it into the new pbo.</li>
+  </ol>
+
+  <div class="callout warn">
+    <b>Signing is up to you</b>
+    The packed pbo is intentionally left unsigned — sign it yourself with your own key before deploying it, exactly like any other pbo you build.
+  </div>
+</section>
+
+<!-- ============================================================ 10 TROUBLESHOOTING -->
+<section class="section">
+  <h2 class="section-title"><span class="n">10</span> Troubleshooting &amp; known limitations</h2>
+
+  <h3>"...needs DayZ Tools to be installed"</h3>
+  <p>You'll see this if the pbo you loaded has binarized configs and DayZ Tools isn't installed on this machine. Install DayZ Tools via Steam (it's free) and try loading again.</p>
+
+  <h3>A caliber I expected isn't in the list</h3>
+  <p>Only calibers with a real <code>cfgAmmo</code> entry show up. A handful of files in the base pack (like <code>VanillaAdaptations</code>) intentionally patch vanilla weapon configs instead of defining a new ammo type, so they contribute no caliber to the list — that's expected, not a bug.</p>
+
+  <h3>My typing didn't seem to register</h3>
+  <p>Click directly into the field first (a single click is enough), then type. If a field ever seems to ignore input, closing and reopening the caliber (click it again in the sidebar) resets the view without losing any already-tracked changes.</p>
+</section>
+
+<!-- ============================================================ 11 QUICK REFERENCE -->
+<section class="section">
+  <h2 class="section-title"><span class="n">11</span> Quick reference</h2>
+
+  <table class="fieldtable">
+    <tr><th>Action</th><th>How</th></tr>
+    <tr><td class="fname">Load a file</td><td>Top bar &rarr; Load Ammo.pbo / Load WeaponScripts.pbo</td></tr>
+    <tr><td class="fname">Find a caliber</td><td>Type into the search box above the caliber list</td></tr>
+    <tr><td class="fname">Edit a stat</td><td>Click the field, type a new number</td></tr>
+    <tr><td class="fname">See what's changed</td><td>Right panel, "Pending Changes" — every caliber, every field</td></tr>
+    <tr><td class="fname">Revert one field</td><td>Retype its original value</td></tr>
+    <tr><td class="fname">Save your work</td><td>Pack Ammo.pbo / Pack WeaponScripts.pbo &rarr; choose a save location</td></tr>
+  </table>
+
+  <p class="lead" style="margin-top: 30px;">That's the whole workflow — load, browse, edit, review, pack. Everything you see in this app reads and writes the real config data your server actually runs.</p>
+</section>
+
+</body>
+</html>

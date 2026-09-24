@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A6 Ammo Stats</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">A6 <span>AMMO STATS</span></div>
+  <div class="topbar-actions">
+    <button id="btnLoadAmmo">Load Ammo.pbo</button>
+    <button id="btnLoadWeaponScripts">Load WeaponScripts.pbo</button>
+    <span id="loadStatus" class="muted"></span>
+  </div>
+</header>
+
+<main class="layout">
+  <aside class="sidebar">
+    <input id="searchBox" type="text" placeholder="Search caliber or classname&hellip;" autocomplete="off">
+    <div id="caliberList" class="caliber-list">
+      <div class="empty-note">Load Ammo.pbo and WeaponScripts.pbo to begin.</div>
+    </div>
+  </aside>
+
+  <section class="editor">
+    <div id="editorEmpty" class="editor-empty">Select a caliber on the left to edit its stats.</div>
+    <div id="editorContent" class="editor-content hidden">
+      <div class="editor-head">
+        <div>
+          <div id="editorCaliber" class="editor-caliber"></div>
+          <div id="editorClassname" class="editor-classname mono"></div>
+        </div>
+        <span id="modifiedBadge" class="modified-badge hidden">Modified</span>
+      </div>
+
+      <div class="stat-section">
+        <div class="stat-section-title">Ballistics</div>
+        <div id="ballisticsFields" class="fields-grid"></div>
+      </div>
+
+      <div class="stat-section">
+        <div class="stat-section-title">Damage</div>
+        <div id="damageFields" class="fields-grid"></div>
+      </div>
+
+      <div class="stat-section" id="magazineSection">
+        <div class="stat-section-title">Magazine</div>
+        <div id="magazineInfo" class="magazine-info"></div>
+      </div>
+    </div>
+  </section>
+
+  <aside class="pack-panel">
+    <div class="card-title">Pending Changes</div>
+    <div id="pendingList" class="pending-list">
+      <div class="empty-note">No changes yet.</div>
+    </div>
+    <div class="pack-actions">
+      <button id="btnPackAmmo" disabled>Pack Ammo.pbo</button>
+      <button id="btnPackWeaponScripts" disabled>Pack WeaponScripts.pbo</button>
+    </div>
+    <div id="packResult" class="muted pack-result"></div>
+  </aside>
+</main>
+
+<script type="module" src="js/app.js?v=1"></script>
+</body>
+</html>
